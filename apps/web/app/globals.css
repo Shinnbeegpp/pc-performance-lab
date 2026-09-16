@@ -507,3 +507,19 @@ p {
     font-size: 1.05rem;
   }
 }
+
+.test-performance-button:disabled {
+  background: #262626;
+  color: #666666;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.test-performance-button:disabled:hover {
+  background: #262626;
+  transform: none;
+}
+
+.status-compatible {
+  color: #4ade80 !important;
+}
