@@ -1,33 +1,31 @@
-generator client {
-  provider = "prisma-client-js"
-}
-
-datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
-}
+// use prisma-8
 
 model Cpu {
-  id                String   @id @default(cuid())
+  id                String   @id @default(cuid(2))
   slug              String   @unique
+
   brand             String
   model             String
   fullName          String
   socket            String
+
   cores             Int
   threads           Int
-  baseClockGHz      Float?
-  boostClockGHz     Float?
+
+  baseClockGHz      Real?
+  boostClockGHz     Real?
+
   powerDrawWatts    Int?
 
-  overallScore      Float?
-  gamingScore       Float?
-  productivityScore Float?
-  passmarkScore     Float?
-  nanoreviewScore   Float?
+  overallScore      Real?
+  gamingScore       Real?
+  productivityScore Real?
+
+  passmarkScore     Real?
+  nanoreviewScore   Real?
 
   createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
+  updatedAt         temporal.updatedAt()
 
   @@index([brand])
   @@index([socket])
@@ -35,24 +33,28 @@ model Cpu {
 }
 
 model Gpu {
-  id                  String   @id @default(cuid())
+  id                  String   @id @default(cuid(2))
   slug                String   @unique
+
   brand               String
   model               String
   fullName            String
+
   vramGB              Int
   memoryType          String?
+
   powerDrawWatts      Int?
   recommendedPsuWatts Int?
 
-  overallScore        Float?
-  gamingScore         Float?
-  productivityScore   Float?
-  passmarkScore       Float?
-  nanoreviewScore     Float?
+  overallScore        Real?
+  gamingScore         Real?
+  productivityScore   Real?
+
+  passmarkScore       Real?
+  nanoreviewScore     Real?
 
   createdAt           DateTime @default(now())
-  updatedAt           DateTime @updatedAt
+  updatedAt           temporal.updatedAt()
 
   @@index([brand])
   @@index([fullName])

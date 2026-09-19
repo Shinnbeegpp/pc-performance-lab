@@ -1,0 +1,739 @@
+{
+  "schemaVersion": "1",
+  "targetFamily": "sql",
+  "target": "postgres",
+  "profileHash": "3916f444a8a17ad749191acf9e08dad97d1a327b88c2f1d45d12f240296aa8b2",
+  "roots": {
+    "cpu": {
+      "model": "Cpu",
+      "namespace": "public"
+    },
+    "gpu": {
+      "model": "Gpu",
+      "namespace": "public"
+    }
+  },
+  "domain": {
+    "namespaces": {
+      "public": {
+        "models": {
+          "Cpu": {
+            "fields": {
+              "baseClockGHz": {
+                "nullable": true,
+                "type": {
+                  "codecId": "pg/float4@1",
+                  "kind": "scalar"
+                }
+              },
+              "boostClockGHz": {
+                "nullable": true,
+                "type": {
+                  "codecId": "pg/float4@1",
+                  "kind": "scalar"
+                }
+              },
+              "brand": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/text@1",
+                  "kind": "scalar"
+                }
+              },
+              "cores": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/int4@1",
+                  "kind": "scalar"
+                }
+              },
+              "createdAt": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/timestamptz-temporal@1",
+                  "kind": "scalar"
+                }
+              },
+              "fullName": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/text@1",
+                  "kind": "scalar"
+                }
+              },
+              "gamingScore": {
+                "nullable": true,
+                "type": {
+                  "codecId": "pg/float4@1",
+                  "kind": "scalar"
+                }
+              },
+              "id": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/text@1",
+                  "kind": "scalar"
+                }
+              },
+              "model": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/text@1",
+                  "kind": "scalar"
+                }
+              },
+              "nanoreviewScore": {
+                "nullable": true,
+                "type": {
+                  "codecId": "pg/float4@1",
+                  "kind": "scalar"
+                }
+              },
+              "overallScore": {
+                "nullable": true,
+                "type": {
+                  "codecId": "pg/float4@1",
+                  "kind": "scalar"
+                }
+              },
+              "passmarkScore": {
+                "nullable": true,
+                "type": {
+                  "codecId": "pg/float4@1",
+                  "kind": "scalar"
+                }
+              },
+              "powerDrawWatts": {
+                "nullable": true,
+                "type": {
+                  "codecId": "pg/int4@1",
+                  "kind": "scalar"
+                }
+              },
+              "productivityScore": {
+                "nullable": true,
+                "type": {
+                  "codecId": "pg/float4@1",
+                  "kind": "scalar"
+                }
+              },
+              "slug": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/text@1",
+                  "kind": "scalar"
+                }
+              },
+              "socket": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/text@1",
+                  "kind": "scalar"
+                }
+              },
+              "threads": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/int4@1",
+                  "kind": "scalar"
+                }
+              },
+              "updatedAt": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/timestamptz-temporal@1",
+                  "kind": "scalar"
+                }
+              }
+            },
+            "relations": {},
+            "storage": {
+              "fields": {
+                "baseClockGHz": {
+                  "column": "baseClockGHz"
+                },
+                "boostClockGHz": {
+                  "column": "boostClockGHz"
+                },
+                "brand": {
+                  "column": "brand"
+                },
+                "cores": {
+                  "column": "cores"
+                },
+                "createdAt": {
+                  "column": "createdAt"
+                },
+                "fullName": {
+                  "column": "fullName"
+                },
+                "gamingScore": {
+                  "column": "gamingScore"
+                },
+                "id": {
+                  "column": "id"
+                },
+                "model": {
+                  "column": "model"
+                },
+                "nanoreviewScore": {
+                  "column": "nanoreviewScore"
+                },
+                "overallScore": {
+                  "column": "overallScore"
+                },
+                "passmarkScore": {
+                  "column": "passmarkScore"
+                },
+                "powerDrawWatts": {
+                  "column": "powerDrawWatts"
+                },
+                "productivityScore": {
+                  "column": "productivityScore"
+                },
+                "slug": {
+                  "column": "slug"
+                },
+                "socket": {
+                  "column": "socket"
+                },
+                "threads": {
+                  "column": "threads"
+                },
+                "updatedAt": {
+                  "column": "updatedAt"
+                }
+              },
+              "namespaceId": "public",
+              "table": "cpu"
+            }
+          },
+          "Gpu": {
+            "fields": {
+              "brand": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/text@1",
+                  "kind": "scalar"
+                }
+              },
+              "createdAt": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/timestamptz-temporal@1",
+                  "kind": "scalar"
+                }
+              },
+              "fullName": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/text@1",
+                  "kind": "scalar"
+                }
+              },
+              "gamingScore": {
+                "nullable": true,
+                "type": {
+                  "codecId": "pg/float4@1",
+                  "kind": "scalar"
+                }
+              },
+              "id": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/text@1",
+                  "kind": "scalar"
+                }
+              },
+              "memoryType": {
+                "nullable": true,
+                "type": {
+                  "codecId": "pg/text@1",
+                  "kind": "scalar"
+                }
+              },
+              "model": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/text@1",
+                  "kind": "scalar"
+                }
+              },
+              "nanoreviewScore": {
+                "nullable": true,
+                "type": {
+                  "codecId": "pg/float4@1",
+                  "kind": "scalar"
+                }
+              },
+              "overallScore": {
+                "nullable": true,
+                "type": {
+                  "codecId": "pg/float4@1",
+                  "kind": "scalar"
+                }
+              },
+              "passmarkScore": {
+                "nullable": true,
+                "type": {
+                  "codecId": "pg/float4@1",
+                  "kind": "scalar"
+                }
+              },
+              "powerDrawWatts": {
+                "nullable": true,
+                "type": {
+                  "codecId": "pg/int4@1",
+                  "kind": "scalar"
+                }
+              },
+              "productivityScore": {
+                "nullable": true,
+                "type": {
+                  "codecId": "pg/float4@1",
+                  "kind": "scalar"
+                }
+              },
+              "recommendedPsuWatts": {
+                "nullable": true,
+                "type": {
+                  "codecId": "pg/int4@1",
+                  "kind": "scalar"
+                }
+              },
+              "slug": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/text@1",
+                  "kind": "scalar"
+                }
+              },
+              "updatedAt": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/timestamptz-temporal@1",
+                  "kind": "scalar"
+                }
+              },
+              "vramGB": {
+                "nullable": false,
+                "type": {
+                  "codecId": "pg/int4@1",
+                  "kind": "scalar"
+                }
+              }
+            },
+            "relations": {},
+            "storage": {
+              "fields": {
+                "brand": {
+                  "column": "brand"
+                },
+                "createdAt": {
+                  "column": "createdAt"
+                },
+                "fullName": {
+                  "column": "fullName"
+                },
+                "gamingScore": {
+                  "column": "gamingScore"
+                },
+                "id": {
+                  "column": "id"
+                },
+                "memoryType": {
+                  "column": "memoryType"
+                },
+                "model": {
+                  "column": "model"
+                },
+                "nanoreviewScore": {
+                  "column": "nanoreviewScore"
+                },
+                "overallScore": {
+                  "column": "overallScore"
+                },
+                "passmarkScore": {
+                  "column": "passmarkScore"
+                },
+                "powerDrawWatts": {
+                  "column": "powerDrawWatts"
+                },
+                "productivityScore": {
+                  "column": "productivityScore"
+                },
+                "recommendedPsuWatts": {
+                  "column": "recommendedPsuWatts"
+                },
+                "slug": {
+                  "column": "slug"
+                },
+                "updatedAt": {
+                  "column": "updatedAt"
+                },
+                "vramGB": {
+                  "column": "vramGB"
+                }
+              },
+              "namespaceId": "public",
+              "table": "gpu"
+            }
+          }
+        }
+      }
+    }
+  },
+  "storage": {
+    "namespaces": {
+      "public": {
+        "entries": {
+          "table": {
+            "cpu": {
+              "columns": {
+                "baseClockGHz": {
+                  "codecId": "pg/float4@1",
+                  "nativeType": "float4",
+                  "nullable": true
+                },
+                "boostClockGHz": {
+                  "codecId": "pg/float4@1",
+                  "nativeType": "float4",
+                  "nullable": true
+                },
+                "brand": {
+                  "codecId": "pg/text@1",
+                  "nativeType": "text",
+                  "nullable": false
+                },
+                "cores": {
+                  "codecId": "pg/int4@1",
+                  "nativeType": "int4",
+                  "nullable": false
+                },
+                "createdAt": {
+                  "codecId": "pg/timestamptz-temporal@1",
+                  "default": {
+                    "expression": "now()",
+                    "kind": "function"
+                  },
+                  "nativeType": "timestamptz",
+                  "nullable": false
+                },
+                "fullName": {
+                  "codecId": "pg/text@1",
+                  "nativeType": "text",
+                  "nullable": false
+                },
+                "gamingScore": {
+                  "codecId": "pg/float4@1",
+                  "nativeType": "float4",
+                  "nullable": true
+                },
+                "id": {
+                  "codecId": "pg/text@1",
+                  "nativeType": "text",
+                  "nullable": false
+                },
+                "model": {
+                  "codecId": "pg/text@1",
+                  "nativeType": "text",
+                  "nullable": false
+                },
+                "nanoreviewScore": {
+                  "codecId": "pg/float4@1",
+                  "nativeType": "float4",
+                  "nullable": true
+                },
+                "overallScore": {
+                  "codecId": "pg/float4@1",
+                  "nativeType": "float4",
+                  "nullable": true
+                },
+                "passmarkScore": {
+                  "codecId": "pg/float4@1",
+                  "nativeType": "float4",
+                  "nullable": true
+                },
+                "powerDrawWatts": {
+                  "codecId": "pg/int4@1",
+                  "nativeType": "int4",
+                  "nullable": true
+                },
+                "productivityScore": {
+                  "codecId": "pg/float4@1",
+                  "nativeType": "float4",
+                  "nullable": true
+                },
+                "slug": {
+                  "codecId": "pg/text@1",
+                  "nativeType": "text",
+                  "nullable": false
+                },
+                "socket": {
+                  "codecId": "pg/text@1",
+                  "nativeType": "text",
+                  "nullable": false
+                },
+                "threads": {
+                  "codecId": "pg/int4@1",
+                  "nativeType": "int4",
+                  "nullable": false
+                },
+                "updatedAt": {
+                  "codecId": "pg/timestamptz-temporal@1",
+                  "nativeType": "timestamptz",
+                  "nullable": false
+                }
+              },
+              "foreignKeys": [],
+              "indexes": [
+                {
+                  "columns": [
+                    "brand"
+                  ],
+                  "name": "cpu_brand_idx_13825d71",
+                  "prefix": "cpu_brand_idx",
+                  "unique": false
+                },
+                {
+                  "columns": [
+                    "fullName"
+                  ],
+                  "name": "cpu_fullName_idx_08c13ff8",
+                  "prefix": "cpu_fullName_idx",
+                  "unique": false
+                },
+                {
+                  "columns": [
+                    "socket"
+                  ],
+                  "name": "cpu_socket_idx_3d450190",
+                  "prefix": "cpu_socket_idx",
+                  "unique": false
+                }
+              ],
+              "primaryKey": {
+                "columns": [
+                  "id"
+                ]
+              },
+              "uniques": [
+                {
+                  "columns": [
+                    "slug"
+                  ]
+                }
+              ]
+            },
+            "gpu": {
+              "columns": {
+                "brand": {
+                  "codecId": "pg/text@1",
+                  "nativeType": "text",
+                  "nullable": false
+                },
+                "createdAt": {
+                  "codecId": "pg/timestamptz-temporal@1",
+                  "default": {
+                    "expression": "now()",
+                    "kind": "function"
+                  },
+                  "nativeType": "timestamptz",
+                  "nullable": false
+                },
+                "fullName": {
+                  "codecId": "pg/text@1",
+                  "nativeType": "text",
+                  "nullable": false
+                },
+                "gamingScore": {
+                  "codecId": "pg/float4@1",
+                  "nativeType": "float4",
+                  "nullable": true
+                },
+                "id": {
+                  "codecId": "pg/text@1",
+                  "nativeType": "text",
+                  "nullable": false
+                },
+                "memoryType": {
+                  "codecId": "pg/text@1",
+                  "nativeType": "text",
+                  "nullable": true
+                },
+                "model": {
+                  "codecId": "pg/text@1",
+                  "nativeType": "text",
+                  "nullable": false
+                },
+                "nanoreviewScore": {
+                  "codecId": "pg/float4@1",
+                  "nativeType": "float4",
+                  "nullable": true
+                },
+                "overallScore": {
+                  "codecId": "pg/float4@1",
+                  "nativeType": "float4",
+                  "nullable": true
+                },
+                "passmarkScore": {
+                  "codecId": "pg/float4@1",
+                  "nativeType": "float4",
+                  "nullable": true
+                },
+                "powerDrawWatts": {
+                  "codecId": "pg/int4@1",
+                  "nativeType": "int4",
+                  "nullable": true
+                },
+                "productivityScore": {
+                  "codecId": "pg/float4@1",
+                  "nativeType": "float4",
+                  "nullable": true
+                },
+                "recommendedPsuWatts": {
+                  "codecId": "pg/int4@1",
+                  "nativeType": "int4",
+                  "nullable": true
+                },
+                "slug": {
+                  "codecId": "pg/text@1",
+                  "nativeType": "text",
+                  "nullable": false
+                },
+                "updatedAt": {
+                  "codecId": "pg/timestamptz-temporal@1",
+                  "nativeType": "timestamptz",
+                  "nullable": false
+                },
+                "vramGB": {
+                  "codecId": "pg/int4@1",
+                  "nativeType": "int4",
+                  "nullable": false
+                }
+              },
+              "foreignKeys": [],
+              "indexes": [
+                {
+                  "columns": [
+                    "brand"
+                  ],
+                  "name": "gpu_brand_idx_13825d71",
+                  "prefix": "gpu_brand_idx",
+                  "unique": false
+                },
+                {
+                  "columns": [
+                    "fullName"
+                  ],
+                  "name": "gpu_fullName_idx_08c13ff8",
+                  "prefix": "gpu_fullName_idx",
+                  "unique": false
+                }
+              ],
+              "primaryKey": {
+                "columns": [
+                  "id"
+                ]
+              },
+              "uniques": [
+                {
+                  "columns": [
+                    "slug"
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        "id": "public",
+        "kind": "postgres-schema"
+      }
+    },
+    "storageHash": "a90a1a32ab59808a4661c3a471483e70e5de932086f3c322f53eba955a5deb7d"
+  },
+  "execution": {
+    "executionHash": "c524fc693f115f3349a95cd3fa8ac2f9a97f38fe82bf1741ee7aa544c97b750f",
+    "mutations": {
+      "defaults": [
+        {
+          "onCreate": {
+            "id": "cuid2",
+            "kind": "generator"
+          },
+          "ref": {
+            "column": "id",
+            "namespace": "public",
+            "table": "cpu"
+          }
+        },
+        {
+          "onCreate": {
+            "id": "instantNow",
+            "kind": "generator"
+          },
+          "onUpdate": {
+            "id": "instantNow",
+            "kind": "generator"
+          },
+          "ref": {
+            "column": "updatedAt",
+            "namespace": "public",
+            "table": "cpu"
+          }
+        },
+        {
+          "onCreate": {
+            "id": "cuid2",
+            "kind": "generator"
+          },
+          "ref": {
+            "column": "id",
+            "namespace": "public",
+            "table": "gpu"
+          }
+        },
+        {
+          "onCreate": {
+            "id": "instantNow",
+            "kind": "generator"
+          },
+          "onUpdate": {
+            "id": "instantNow",
+            "kind": "generator"
+          },
+          "ref": {
+            "column": "updatedAt",
+            "namespace": "public",
+            "table": "gpu"
+          }
+        }
+      ]
+    }
+  },
+  "capabilities": {
+    "postgres": {
+      "distinctOn": true,
+      "jsonAgg": true,
+      "lateral": true,
+      "limit": true,
+      "orderBy": true,
+      "returning": true
+    },
+    "sql": {
+      "checkConstraint": true,
+      "defaultInInsert": true,
+      "enums": true,
+      "lateral": true,
+      "returning": true,
+      "scalarList": true
+    }
+  },
+  "extensions": {},
+  "meta": {},
+  "_generated": {
+    "warning": "⚠️  GENERATED FILE - DO NOT EDIT",
+    "message": "This file is automatically generated by \"prisma contract emit\".",
+    "regenerate": "To regenerate, run: prisma contract emit"
+  }
+}
