@@ -1,0 +1,59 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Cpu {
+  id                String   @id @default(cuid())
+  slug              String   @unique
+  brand             String
+  model             String
+  fullName          String
+  socket            String
+  cores             Int
+  threads           Int
+  baseClockGHz      Float?
+  boostClockGHz     Float?
+  powerDrawWatts    Int?
+
+  overallScore      Float?
+  gamingScore       Float?
+  productivityScore Float?
+  passmarkScore     Float?
+  nanoreviewScore   Float?
+
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  @@index([brand])
+  @@index([socket])
+  @@index([fullName])
+}
+
+model Gpu {
+  id                  String   @id @default(cuid())
+  slug                String   @unique
+  brand               String
+  model               String
+  fullName            String
+  vramGB              Int
+  memoryType          String?
+  powerDrawWatts      Int?
+  recommendedPsuWatts Int?
+
+  overallScore        Float?
+  gamingScore         Float?
+  productivityScore   Float?
+  passmarkScore       Float?
+  nanoreviewScore     Float?
+
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+
+  @@index([brand])
+  @@index([fullName])
+}
