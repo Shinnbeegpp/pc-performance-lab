@@ -1,4 +1,4 @@
-import { Controller, Get } from "@nestjs/common";
+import { Controller, Get, Query } from "@nestjs/common";
 import { ComponentsService } from "./components.service.js";
 
 @Controller("components")
@@ -8,12 +8,12 @@ export class ComponentsController {
   ) {}
 
   @Get("cpus")
-  getCpus() {
-    return this.componentsService.getCpus();
+  getCpus(@Query("search") search?: string) {
+    return this.componentsService.getCpus(search);
   }
 
   @Get("gpus")
-  getGpus() {
-    return this.componentsService.getGpus();
+  getGpus(@Query("search") search?: string) {
+    return this.componentsService.getGpus(search);
   }
 }

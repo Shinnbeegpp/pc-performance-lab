@@ -2,29 +2,75 @@
 
 import { useMemo, useState } from "react";
 
+import ComponentPicker, {
+  type ComponentOption,
+} from "../components/ComponentPicker";
+
+import {
+  checkCpuSocketCompatibility,
+  checkGpuPowerCompatibility,
+} from "../../lib/compatibility";
+
+
+
+type MotherboardOption = {
+  id: string;
+  name: string;
+  socket: string;
+};
+
 type BuildState = {
-  cpu: string;
-  gpu: string;
-  motherboard: string;
+  cpu: ComponentOption | null;
+  gpu: ComponentOption | null;
+  motherboard: MotherboardOption | null;
+
   ram: string;
   storage: string;
-  psu: string;
+  psuWatts: number;
+
   cooler: string;
   pcCase: string;
+
   resolution: string;
   useCase: string;
 };
 
 export default function BuilderPage() {
+  
+  const motherboards: MotherboardOption[] = [
+    {
+      id: "msi-b550m-pro-vdh",
+      name: "MSI B550M PRO-VDH",
+      socket: "AM4",
+    },
+    {
+      id: "asus-tuf-b550-plus",
+      name: "ASUS TUF Gaming B550-Plus",
+      socket: "AM4",
+    },
+    {
+      id: "msi-b760-gaming-plus",
+      name: "MSI B760 Gaming Plus",
+      socket: "LGA1700",
+    },
+  ];
+
+
+
   const [build, setBuild] = useState<BuildState>({
-    cpu: "",
-    gpu: "",
-    motherboard: "",
+    cpu: null,
+    gpu: null,
+
+    motherboard: null,
+
     ram: "",
     storage: "",
-    psu: "",
+
+    psuWatts: 0,
+
     cooler: "",
     pcCase: "",
+
     resolution: "1080p",
     useCase: "gaming",
   });
@@ -35,16 +81,39 @@ export default function BuilderPage() {
     build.motherboard,
     build.ram,
     build.storage,
-    build.psu,
+    build.psuWatts,
   ];
 
   const selectedRequiredCount = useMemo(() => {
     return requiredParts.filter(Boolean).length;
   }, [requiredParts]);
+  
+  const isComplete =
+    selectedRequiredCount === requiredParts.length;
+  
+  const cpuCompatibility =
+    checkCpuSocketCompatibility(
+      build.cpu,
+      build.motherboard?.socket ?? "",
+    );
 
-  const isComplete = selectedRequiredCount === requiredParts.length;
+  const gpuPowerCompatibility =
+    checkGpuPowerCompatibility(
+      build.gpu,
+      build.psuWatts,
+    );
 
-  function updateBuild(field: keyof BuildState, value: string) {
+  const isCompatible =
+    cpuCompatibility.compatible &&
+    gpuPowerCompatibility.compatible;
+
+  const canTestPerformance =
+    isComplete && isCompatible;
+
+  function updateBuild<K extends keyof BuildState>(
+    field: K,
+    value: BuildState[K],
+  ) {
     setBuild((current) => ({
       ...current,
       [field]: value,
@@ -52,11 +121,15 @@ export default function BuilderPage() {
   }
 
   function handleTestPerformance() {
-    if (!isComplete) return;
-
+    if (!canTestPerformance) {
+      return;
+    }
+  
     console.log("Testing build:", build);
-
-    alert("Build complete! Performance testing will be added next.");
+  
+    alert(
+      "Build is compatible and ready for performance testing.",
+    );
   }
 
   return (
@@ -90,74 +163,58 @@ export default function BuilderPage() {
             <div className="component-grid">
 
               <label className="component-field">
-                <span>Processor</span>
+                
 
-                <select
+                <ComponentPicker
+                  label="Processor"
+                  endpoint="cpus"
                   value={build.cpu}
-                  onChange={(event) =>
-                    updateBuild("cpu", event.target.value)
+                  onSelect={(cpu) =>
+                    updateBuild("cpu", cpu)
                   }
-                >
-                  <option value="">Select CPU</option>
-                  <option value="AMD Ryzen 5 5600">
-                    AMD Ryzen 5 5600
-                  </option>
-                  <option value="AMD Ryzen 7 5700X">
-                    AMD Ryzen 7 5700X
-                  </option>
-                  <option value="Intel Core i5-12400F">
-                    Intel Core i5-12400F
-                  </option>
-                  <option value="Intel Core i7-12700K">
-                    Intel Core i7-12700K
-                  </option>
-                </select>
+                />
               </label>
 
               <label className="component-field">
-                <span>Graphics Card</span>
+                
 
-                <select
+                <ComponentPicker
+                  label="Graphics Card"
+                  endpoint="gpus"
                   value={build.gpu}
-                  onChange={(event) =>
-                    updateBuild("gpu", event.target.value)
+                  onSelect={(gpu) =>
+                    updateBuild("gpu", gpu)
                   }
-                >
-                  <option value="">Select GPU</option>
-                  <option value="NVIDIA GeForce RTX 4060">
-                    NVIDIA GeForce RTX 4060
-                  </option>
-                  <option value="NVIDIA GeForce RTX 4070">
-                    NVIDIA GeForce RTX 4070
-                  </option>
-                  <option value="AMD Radeon RX 7600">
-                    AMD Radeon RX 7600
-                  </option>
-                  <option value="AMD Radeon RX 7800 XT">
-                    AMD Radeon RX 7800 XT
-                  </option>
-                </select>
+                />
               </label>
 
               <label className="component-field">
                 <span>Motherboard</span>
 
                 <select
-                  value={build.motherboard}
-                  onChange={(event) =>
-                    updateBuild("motherboard", event.target.value)
-                  }
+                  value={build.motherboard?.id ?? ""}
+                  onChange={(event) => {
+                    const motherboard =
+                      motherboards.find(
+                        (item) =>
+                          item.id === event.target.value,
+                      ) ?? null;
+
+                    updateBuild("motherboard", motherboard);
+                  }}
                 >
-                  <option value="">Select Motherboard</option>
-                  <option value="MSI B550M PRO-VDH">
-                    MSI B550M PRO-VDH
+                  <option value="">
+                    Select Motherboard
                   </option>
-                  <option value="ASUS TUF Gaming B550-Plus">
-                    ASUS TUF Gaming B550-Plus
-                  </option>
-                  <option value="MSI B760 Gaming Plus">
-                    MSI B760 Gaming Plus
-                  </option>
+
+                  {motherboards.map((motherboard) => (
+                    <option
+                      key={motherboard.id}
+                      value={motherboard.id}
+                    >
+                      {motherboard.name} ({motherboard.socket})
+                    </option>
+                  ))}
                 </select>
               </label>
 
@@ -225,16 +282,23 @@ export default function BuilderPage() {
                 <span>Power Supply</span>
 
                 <select
-                  value={build.psu}
+                  value={build.psuWatts || ""}
                   onChange={(event) =>
-                    updateBuild("psu", event.target.value)
+                    updateBuild(
+                      "psuWatts",
+                      Number(event.target.value),
+                    )
                   }
                 >
-                  <option value="">Select PSU</option>
-                  <option value="550W">550W</option>
-                  <option value="650W">650W</option>
-                  <option value="750W">750W</option>
-                  <option value="850W">850W</option>
+                  <option value="">
+                    Select PSU
+                  </option>
+
+                  <option value="450">450 W</option>
+                  <option value="550">550 W</option>
+                  <option value="650">650 W</option>
+                  <option value="750">750 W</option>
+                  <option value="850">850 W</option>
                 </select>
               </label>
             </div>
@@ -382,78 +446,59 @@ export default function BuilderPage() {
             </div>
           </div>
 
-          <div className="summary-list">
-
-            <div>
-              <span>CPU</span>
-              <strong>{build.cpu || "Not selected"}</strong>
-            </div>
-
-            <div>
-              <span>GPU</span>
-              <strong>{build.gpu || "Not selected"}</strong>
-            </div>
-
-            <div>
-              <span>Motherboard</span>
-              <strong>
-                {build.motherboard || "Not selected"}
-              </strong>
-            </div>
-
-            <div>
-              <span>RAM</span>
-              <strong>{build.ram || "Not selected"}</strong>
-            </div>
-
-            <div>
-              <span>Storage</span>
-              <strong>
-                {build.storage || "Not selected"}
-              </strong>
-            </div>
-
-            <div>
-              <span>PSU</span>
-              <strong>{build.psu || "Not selected"}</strong>
-            </div>
-
-            <div>
+          <div>
               <span>Compatibility</span>
 
-              <strong
-                className={
-                  isComplete
-                    ? "status-compatible"
-                    : "status-neutral"
-                }
-              >
-                {isComplete ? "Ready to check" : "Waiting"}
-              </strong>
+              <div className="compatibility-panel">
+                <h3>Compatibility</h3>
+
+                <div
+                  className={`compatibility-item ${
+                    cpuCompatibility.compatible
+                      ? "compatible"
+                      : "incompatible"
+                  }`}
+                >
+                  <span>CPU / Motherboard</span>
+                  <p>{cpuCompatibility.message}</p>
+                </div>
+
+                <div
+                  className={`compatibility-item ${
+                    gpuPowerCompatibility.compatible
+                      ? "compatible"
+                      : "incompatible"
+                  }`}
+                >
+                  <span>GPU / Power Supply</span>
+                  <p>{gpuPowerCompatibility.message}</p>
+                </div>
+              </div>
             </div>
-          </div>
 
-          <button
-            className="test-performance-button"
-            disabled={!isComplete}
-            onClick={handleTestPerformance}
-          >
-            Test Performance
-          </button>
+            <button
+              className="test-performance-button"
+              disabled={!canTestPerformance}
+              onClick={handleTestPerformance}
+            >
+              Test Performance
+            </button>
 
-          <p className="test-performance-note">
-            {isComplete
-              ? "Your build is ready for performance testing."
-              : `Select ${
-                  requiredParts.length - selectedRequiredCount
-                } more required component${
-                  requiredParts.length - selectedRequiredCount === 1
-                    ? ""
-                    : "s"
-                }.`}
-          </p>
-        </aside>
-      </div>
-    </section>
+            <p className="test-performance-note">
+              {!isComplete
+                ? `Select ${
+                    requiredParts.length - selectedRequiredCount
+                  } more required component${
+                    requiredParts.length - selectedRequiredCount === 1
+                      ? ""
+                      : "s"
+                  }.`
+                : !isCompatible
+                  ? "Resolve compatibility issues before testing performance."
+                  : "Your build is compatible and ready for performance testing."}
+            </p>
+          </aside>
+        </div>
+      </section>
   );
 }
