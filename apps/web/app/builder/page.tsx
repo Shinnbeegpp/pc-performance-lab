@@ -75,15 +75,25 @@ export default function BuilderPage() {
     useCase: "gaming",
   });
 
-  const requiredParts = [
-    build.cpu,
-    build.gpu,
-    build.motherboard,
-    build.ram,
-    build.storage,
-    build.psuWatts,
-  ];
-
+  const requiredParts = useMemo(
+    () => [
+      build.cpu,
+      build.gpu,
+      build.motherboard,
+      build.ram,
+      build.storage,
+      build.psuWatts,
+    ],
+    [
+      build.cpu,
+      build.gpu,
+      build.motherboard,
+      build.ram,
+      build.storage,
+      build.psuWatts,
+    ],
+  );
+  
   const selectedRequiredCount = useMemo(() => {
     return requiredParts.filter(Boolean).length;
   }, [requiredParts]);
