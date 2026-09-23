@@ -11,8 +11,6 @@ import {
   checkGpuPowerCompatibility,
 } from "../../lib/compatibility";
 
-
-
 type MotherboardOption = {
   id: string;
   name: string;
@@ -36,7 +34,6 @@ type BuildState = {
 };
 
 export default function BuilderPage() {
-  
   const motherboards: MotherboardOption[] = [
     {
       id: "msi-b550m-pro-vdh",
@@ -54,8 +51,6 @@ export default function BuilderPage() {
       socket: "LGA1700",
     },
   ];
-
-
 
   const [build, setBuild] = useState<BuildState>({
     cpu: null,
@@ -93,32 +88,27 @@ export default function BuilderPage() {
       build.psuWatts,
     ],
   );
-  
+
   const selectedRequiredCount = useMemo(() => {
     return requiredParts.filter(Boolean).length;
   }, [requiredParts]);
-  
-  const isComplete =
-    selectedRequiredCount === requiredParts.length;
-  
-  const cpuCompatibility =
-    checkCpuSocketCompatibility(
-      build.cpu,
-      build.motherboard?.socket ?? "",
-    );
 
-  const gpuPowerCompatibility =
-    checkGpuPowerCompatibility(
-      build.gpu,
-      build.psuWatts,
-    );
+  const isComplete = selectedRequiredCount === requiredParts.length;
+
+  const cpuCompatibility = checkCpuSocketCompatibility(
+    build.cpu,
+    build.motherboard?.socket ?? "",
+  );
+
+  const gpuPowerCompatibility = checkGpuPowerCompatibility(
+    build.gpu,
+    build.psuWatts,
+  );
 
   const isCompatible =
-    cpuCompatibility.compatible &&
-    gpuPowerCompatibility.compatible;
+    cpuCompatibility.compatible && gpuPowerCompatibility.compatible;
 
-  const canTestPerformance =
-    isComplete && isCompatible;
+  const canTestPerformance = isComplete && isCompatible;
 
   function updateBuild<K extends keyof BuildState>(
     field: K,
@@ -134,30 +124,22 @@ export default function BuilderPage() {
     if (!canTestPerformance) {
       return;
     }
-  
+
     console.log("Testing build:", build);
-  
-    alert(
-      "Build is compatible and ready for performance testing.",
-    );
+
+    alert("Build is compatible and ready for performance testing.");
   }
 
   return (
     <section className="builder-page">
-      <div className="builder-header">
-        <span className="home-badge">Build & Test</span>
+      <header className="page-header">
+        <h1>Build &amp; Test</h1>
 
-        <h1>Build your PC</h1>
-
-        <p>
-          Select your components, review your configuration, and test its
-          expected performance.
-        </p>
-      </div>
+        <p>Select your components and check compatibility before testing.</p>
+      </header>
 
       <div className="builder-layout">
         <div className="builder-sections">
-
           {/* CORE COMPONENTS */}
 
           <section className="builder-section">
@@ -171,32 +153,23 @@ export default function BuilderPage() {
             </div>
 
             <div className="component-grid">
-
-              <label className="component-field">
-                
-
+              <div className="component-field">
                 <ComponentPicker
                   label="Processor"
                   endpoint="cpus"
                   value={build.cpu}
-                  onSelect={(cpu) =>
-                    updateBuild("cpu", cpu)
-                  }
+                  onSelect={(cpu) => updateBuild("cpu", cpu)}
                 />
-              </label>
+              </div>
 
-              <label className="component-field">
-                
-
+              <div className="component-field">
                 <ComponentPicker
                   label="Graphics Card"
                   endpoint="gpus"
                   value={build.gpu}
-                  onSelect={(gpu) =>
-                    updateBuild("gpu", gpu)
-                  }
+                  onSelect={(gpu) => updateBuild("gpu", gpu)}
                 />
-              </label>
+              </div>
 
               <label className="component-field">
                 <span>Motherboard</span>
@@ -206,22 +179,16 @@ export default function BuilderPage() {
                   onChange={(event) => {
                     const motherboard =
                       motherboards.find(
-                        (item) =>
-                          item.id === event.target.value,
+                        (item) => item.id === event.target.value,
                       ) ?? null;
 
                     updateBuild("motherboard", motherboard);
                   }}
                 >
-                  <option value="">
-                    Select Motherboard
-                  </option>
+                  <option value="">Select Motherboard</option>
 
                   {motherboards.map((motherboard) => (
-                    <option
-                      key={motherboard.id}
-                      value={motherboard.id}
-                    >
+                    <option key={motherboard.id} value={motherboard.id}>
                       {motherboard.name} ({motherboard.socket})
                     </option>
                   ))}
@@ -233,20 +200,12 @@ export default function BuilderPage() {
 
                 <select
                   value={build.ram}
-                  onChange={(event) =>
-                    updateBuild("ram", event.target.value)
-                  }
+                  onChange={(event) => updateBuild("ram", event.target.value)}
                 >
                   <option value="">Select RAM</option>
-                  <option value="16GB DDR4 3200MHz">
-                    16GB DDR4 3200MHz
-                  </option>
-                  <option value="32GB DDR4 3200MHz">
-                    32GB DDR4 3200MHz
-                  </option>
-                  <option value="32GB DDR5 6000MHz">
-                    32GB DDR5 6000MHz
-                  </option>
+                  <option value="16GB DDR4 3200MHz">16GB DDR4 3200MHz</option>
+                  <option value="32GB DDR4 3200MHz">32GB DDR4 3200MHz</option>
+                  <option value="32GB DDR5 6000MHz">32GB DDR5 6000MHz</option>
                 </select>
               </label>
             </div>
@@ -265,7 +224,6 @@ export default function BuilderPage() {
             </div>
 
             <div className="component-grid">
-
               <label className="component-field">
                 <span>Storage</span>
 
@@ -276,15 +234,9 @@ export default function BuilderPage() {
                   }
                 >
                   <option value="">Select Storage</option>
-                  <option value="500GB NVMe SSD">
-                    500GB NVMe SSD
-                  </option>
-                  <option value="1TB NVMe SSD">
-                    1TB NVMe SSD
-                  </option>
-                  <option value="2TB NVMe SSD">
-                    2TB NVMe SSD
-                  </option>
+                  <option value="500GB NVMe SSD">500GB NVMe SSD</option>
+                  <option value="1TB NVMe SSD">1TB NVMe SSD</option>
+                  <option value="2TB NVMe SSD">2TB NVMe SSD</option>
                 </select>
               </label>
 
@@ -294,15 +246,10 @@ export default function BuilderPage() {
                 <select
                   value={build.psuWatts || ""}
                   onChange={(event) =>
-                    updateBuild(
-                      "psuWatts",
-                      Number(event.target.value),
-                    )
+                    updateBuild("psuWatts", Number(event.target.value))
                   }
                 >
-                  <option value="">
-                    Select PSU
-                  </option>
+                  <option value="">Select PSU</option>
 
                   <option value="450">450 W</option>
                   <option value="550">550 W</option>
@@ -323,13 +270,10 @@ export default function BuilderPage() {
                 <h2>Cooling & Case</h2>
               </div>
 
-              <span className="builder-section-status optional">
-                Optional
-              </span>
+              <span className="builder-section-status optional">Optional</span>
             </div>
 
             <div className="component-grid">
-
               <label className="component-field">
                 <span>CPU Cooler</span>
 
@@ -340,15 +284,9 @@ export default function BuilderPage() {
                   }
                 >
                   <option value="">Select Cooler</option>
-                  <option value="Stock Cooler">
-                    Stock Cooler
-                  </option>
-                  <option value="120mm Air Cooler">
-                    120mm Air Cooler
-                  </option>
-                  <option value="240mm AIO">
-                    240mm AIO
-                  </option>
+                  <option value="Stock Cooler">Stock Cooler</option>
+                  <option value="120mm Air Cooler">120mm Air Cooler</option>
+                  <option value="240mm AIO">240mm AIO</option>
                 </select>
               </label>
 
@@ -362,15 +300,9 @@ export default function BuilderPage() {
                   }
                 >
                   <option value="">Select Case</option>
-                  <option value="Mid Tower">
-                    Mid Tower
-                  </option>
-                  <option value="Micro ATX Tower">
-                    Micro ATX Tower
-                  </option>
-                  <option value="Full Tower">
-                    Full Tower
-                  </option>
+                  <option value="Mid Tower">Mid Tower</option>
+                  <option value="Micro ATX Tower">Micro ATX Tower</option>
+                  <option value="Full Tower">Full Tower</option>
                 </select>
               </label>
             </div>
@@ -387,7 +319,6 @@ export default function BuilderPage() {
             </div>
 
             <div className="component-grid">
-
               <label className="component-field">
                 <span>Resolution</span>
 
@@ -397,15 +328,9 @@ export default function BuilderPage() {
                     updateBuild("resolution", event.target.value)
                   }
                 >
-                  <option value="1080p">
-                    1920 × 1080
-                  </option>
-                  <option value="1440p">
-                    2560 × 1440
-                  </option>
-                  <option value="4k">
-                    3840 × 2160
-                  </option>
+                  <option value="1080p">1920 × 1080</option>
+                  <option value="1440p">2560 × 1440</option>
+                  <option value="4k">3840 × 2160</option>
                 </select>
               </label>
 
@@ -418,15 +343,9 @@ export default function BuilderPage() {
                     updateBuild("useCase", event.target.value)
                   }
                 >
-                  <option value="gaming">
-                    Gaming
-                  </option>
-                  <option value="productivity">
-                    Productivity
-                  </option>
-                  <option value="mixed">
-                    Gaming + Productivity
-                  </option>
+                  <option value="gaming">Gaming</option>
+                  <option value="productivity">Productivity</option>
+                  <option value="mixed">Gaming + Productivity</option>
                 </select>
               </label>
             </div>
@@ -435,80 +354,135 @@ export default function BuilderPage() {
 
         {/* RIGHT SIDE SUMMARY */}
 
-        <aside className="build-summary">
+        <aside
+          className="build-summary"
+          aria-labelledby="build-summary-heading"
+        >
           <div className="build-summary-header">
-            <span>Current Build</span>
+            <h2 id="build-summary-heading">Current Build</h2>
 
             <span className="build-count">
-              {selectedRequiredCount} / {requiredParts.length}
+              {selectedRequiredCount} / {requiredParts.length} required
             </span>
           </div>
 
-          <div className="pc-preview-placeholder">
-            <div className="pc-case-placeholder">
-              <span>3D Preview</span>
+          <progress
+            className="build-progress"
+            value={selectedRequiredCount}
+            max={requiredParts.length}
+            aria-label="Required components selected"
+          />
 
-              <small>
-                {selectedRequiredCount === 0
-                  ? "Select components to begin"
-                  : "3D components will appear here later"}
-              </small>
+          <dl className="summary-list">
+            {[
+              ["Processor", build.cpu?.fullName],
+              ["Graphics", build.gpu?.fullName],
+              ["Motherboard", build.motherboard?.name],
+              ["Memory", build.ram],
+              ["Storage", build.storage],
+              ["Power", build.psuWatts ? `${build.psuWatts} W` : ""],
+              ["Cooler", build.cooler],
+              ["Case", build.pcCase],
+              ["Resolution", build.resolution],
+              [
+                "Primary use",
+                build.useCase === "mixed"
+                  ? "Gaming + Productivity"
+                  : build.useCase === "gaming"
+                    ? "Gaming"
+                    : "Productivity",
+              ],
+            ].map(([label, value]) => (
+              <div key={label}>
+                <dt>{label}</dt>
+                <dd className={value ? undefined : "summary-empty"}>
+                  {value || "Not selected"}
+                </dd>
+              </div>
+            ))}
+          </dl>
+
+          <div className="compatibility-panel" aria-live="polite">
+            <h3>Compatibility</h3>
+
+            <div
+              className={`compatibility-item ${
+                !build.cpu || !build.motherboard
+                  ? "pending"
+                  : cpuCompatibility.compatible
+                    ? "compatible"
+                    : "incompatible"
+              }`}
+            >
+              <div className="compatibility-heading">
+                <strong>CPU / Motherboard</strong>
+                <span className="compatibility-state">
+                  {!build.cpu || !build.motherboard
+                    ? "Pending"
+                    : cpuCompatibility.compatible
+                      ? "Pass"
+                      : "Check required"}
+                </span>
+              </div>
+              <p>{cpuCompatibility.message}</p>
+            </div>
+
+            <div
+              className={`compatibility-item ${
+                !build.gpu || !build.psuWatts
+                  ? "pending"
+                  : gpuPowerCompatibility.compatible
+                    ? "compatible"
+                    : "incompatible"
+              }`}
+            >
+              <div className="compatibility-heading">
+                <strong>GPU / Power Supply</strong>
+                <span className="compatibility-state">
+                  {!build.gpu || !build.psuWatts
+                    ? "Pending"
+                    : gpuPowerCompatibility.compatible
+                      ? "Pass"
+                      : "Check required"}
+                </span>
+              </div>
+              <p>{gpuPowerCompatibility.message}</p>
             </div>
           </div>
 
-          <div>
-              <span>Compatibility</span>
+          <button
+            type="button"
+            className="test-performance-button"
+            aria-describedby="test-performance-note"
+            disabled={!canTestPerformance}
+            onClick={handleTestPerformance}
+          >
+            Test Performance
+          </button>
 
-              <div className="compatibility-panel">
-                <h3>Compatibility</h3>
-
-                <div
-                  className={`compatibility-item ${
-                    cpuCompatibility.compatible
-                      ? "compatible"
-                      : "incompatible"
-                  }`}
-                >
-                  <span>CPU / Motherboard</span>
-                  <p>{cpuCompatibility.message}</p>
-                </div>
-
-                <div
-                  className={`compatibility-item ${
-                    gpuPowerCompatibility.compatible
-                      ? "compatible"
-                      : "incompatible"
-                  }`}
-                >
-                  <span>GPU / Power Supply</span>
-                  <p>{gpuPowerCompatibility.message}</p>
-                </div>
-              </div>
+          <p id="test-performance-note" className="test-performance-note">
+            {!isComplete
+              ? `Select ${
+                  requiredParts.length - selectedRequiredCount
+                } more required component${
+                  requiredParts.length - selectedRequiredCount === 1 ? "" : "s"
+                }.`
+              : !isCompatible
+                ? "Resolve compatibility issues before testing performance."
+                : "Your build is compatible and ready for performance testing."}
+          </p>
+          <div className="pc-preview-placeholder">
+            <div className="pc-case-placeholder">
+              <span>3D preview</span>
+              <small>
+                {selectedRequiredCount === 0
+                  ? "Select components to begin. Preview coming soon."
+                  : "Preview for your configuration is coming soon."}
+              </small>
             </div>
-
-            <button
-              className="test-performance-button"
-              disabled={!canTestPerformance}
-              onClick={handleTestPerformance}
-            >
-              Test Performance
-            </button>
-
-            <p className="test-performance-note">
-              {!isComplete
-                ? `Select ${
-                    requiredParts.length - selectedRequiredCount
-                  } more required component${
-                    requiredParts.length - selectedRequiredCount === 1
-                      ? ""
-                      : "s"
-                  }.`
-                : !isCompatible
-                  ? "Resolve compatibility issues before testing performance."
-                  : "Your build is compatible and ready for performance testing."}
-            </p>
-          </aside>
-        </div>
-      </section>
+          </div>
+        </aside>
+      </div>
+    </section>
   );
 }

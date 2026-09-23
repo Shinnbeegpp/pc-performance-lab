@@ -1,6 +1,18 @@
+"use client";
+
 import Link from "next/link";
+import { usePathname } from "next/navigation";
+
+const links = [
+  { href: "/", label: "Home" },
+  { href: "/builder", label: "Build & Test" },
+  { href: "/rate-my-pc", label: "Rate My PC" },
+  { href: "/results", label: "Results" },
+];
 
 export default function Navbar() {
+  const pathname = usePathname();
+
   return (
     <header className="navbar">
       <div className="navbar-container">
@@ -8,22 +20,17 @@ export default function Navbar() {
           PC Performance Lab
         </Link>
 
-        <nav className="navbar-links">
-          <Link href="/" className="navbar-link">
-            Home
-          </Link>
-
-          <Link href="/builder" className="navbar-link">
-            Build & Test
-          </Link>
-
-          <Link href="/rate-my-pc" className="navbar-link">
-            Rate My PC
-          </Link>
-
-          <Link href="/results" className="navbar-link">
-            Results
-          </Link>
+        <nav className="navbar-links" aria-label="Main navigation">
+          {links.map(({ href, label }) => (
+            <Link
+              key={href}
+              href={href}
+              className="navbar-link"
+              aria-current={pathname === href ? "page" : undefined}
+            >
+              {label}
+            </Link>
+          ))}
         </nav>
       </div>
     </header>

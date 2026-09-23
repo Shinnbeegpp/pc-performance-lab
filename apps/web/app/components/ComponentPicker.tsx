@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useId, useState } from "react";
 
 export type ComponentOption = {
   id: string;
@@ -33,6 +33,7 @@ export default function ComponentPicker({
   value,
   onSelect,
 }: ComponentPickerProps) {
+  const inputId = useId();
   const [search, setSearch] = useState("");
   const [results, setResults] = useState<ComponentOption[]>([]);
   const [loading, setLoading] = useState(false);
@@ -89,14 +90,11 @@ export default function ComponentPicker({
   function renderDetails(component: ComponentOption) {
     if (endpoint === "cpus") {
       const cpuDetails = [
-        component.cores !== undefined &&
-        component.threads !== undefined
+        component.cores !== undefined && component.threads !== undefined
           ? `${component.cores} cores / ${component.threads} threads`
           : null,
 
-        component.socket
-          ? `Socket ${component.socket}`
-          : null,
+        component.socket ? `Socket ${component.socket}` : null,
 
         component.powerDrawWatts !== undefined
           ? `${component.powerDrawWatts} W`
@@ -107,9 +105,7 @@ export default function ComponentPicker({
     }
 
     const gpuDetails = [
-      component.vramGB !== undefined
-        ? `${component.vramGB} GB VRAM`
-        : null,
+      component.vramGB !== undefined ? `${component.vramGB} GB VRAM` : null,
 
       component.memoryType ?? null,
 
@@ -123,15 +119,16 @@ export default function ComponentPicker({
 
   return (
     <div className="component-picker">
-      <label>{label}</label>
+      <label htmlFor={inputId}>{label}</label>
 
       <input
+        id={inputId}
         type="text"
+        autoComplete="off"
+        aria-describedby={loading ? `${inputId}-status` : undefined}
         value={value?.fullName ?? search}
         placeholder={`Search ${label}...`}
-        onChange={(event) =>
-          handleInputChange(event.target.value)
-        }
+        onChange={(event) => handleInputChange(event.target.value)}
         onFocus={() => {
           if (results.length > 0) {
             setOpen(true);
@@ -140,7 +137,7 @@ export default function ComponentPicker({
       />
 
       {loading && (
-        <div className="picker-status">
+        <div id={`${inputId}-status`} className="picker-status" role="status">
           Searching...
         </div>
       )}
@@ -158,9 +155,7 @@ export default function ComponentPicker({
                 setOpen(false);
               }}
             >
-              <span className="picker-option-name">
-                {component.fullName}
-              </span>
+              <span className="picker-option-name">{component.fullName}</span>
 
               <span className="picker-option-details">
                 {renderDetails(component)}
@@ -170,14 +165,9 @@ export default function ComponentPicker({
         </div>
       )}
 
-      {open &&
-        !loading &&
-        search.length >= 2 &&
-        results.length === 0 && (
-          <div className="picker-dropdown picker-empty">
-            No components found.
-          </div>
-        )}
+      {open && !loading && search.length >= 2 && results.length === 0 && (
+        <div className="picker-dropdown picker-empty">No components found.</div>
+      )}
     </div>
   );
 }
